@@ -44,7 +44,7 @@
     $resultado_pokemon = mysqli_query($conn, $result_pokemons);
     
     
-    if(mysqli_insert($conn)){ // O ERRO É AQUI
+    if(mysqli_insert_id($conn)){ // O ERRO É AQUI
         header("Location : Pokedex.html");
     }
     else{
