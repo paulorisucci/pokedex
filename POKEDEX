@@ -1,0 +1,68 @@
+<!-- FORMULÁRIO-->  
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{
+     text-align: center;
+     }
+    </style>
+    <title>Pokédex</title>
+</head>
+<body>
+    <h1>POKEDEX</h1>
+    <br/>
+        <form action = "pokedex.php" method = "POST">
+            <b>
+                Nome do pokemon :<br/> <input type = "text" placeholder = "Nome completo do Pokemon" name = "nome"/><br/><br/>
+                Tipo(s) :<br/> <input type = "text" placeholder = "Tipo principal e/ou secundário" name = "tipo"/><br/><br/>
+                Número:<br/><input type = "text" placeholder = "Número na pokedex" name = "numero"/><br/><br/>
+                Local:<br/><input type = "text" placeholder = "Local de captura" name = "local"/><br/><br/>
+                <input type = "submit" name = "registrar"/>
+            </b>
+
+        </form>
+</body>
+</html>
+
+ <!DOCTYPE html> <!-- REGISTRO NO BANCO DE DADOS --> 
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+     <?php
+    include_once("conexao.php");
+    $conexao =  mysqli_connect("localhost", "root", "", "pokemon");
+    $nome = $_POST["nome"];
+    $tipo = $_POST["tipo"];
+    $numero = $_POST["numero"];
+    $local = $_POST["local"];
+    $result_pokemons = "INSERT INTO pokemons(nome, tipo, numero, localidade, capturado) VALUES('$nome', '$tipo', '$numero', '$local', NOW())";
+    $resultado_pokemon = mysqli_query($conn, $result_pokemons);
+    
+    
+    if(mysqli_insert($conn)){ // O ERRO É AQUI
+        header("Location : Pokedex.html");
+    }
+    else{
+        header("Location : Pokedex.html");
+    }
+    //echo "Nome do pokémon: $nome"."<br/>"; 
+    //echo "Tipo(s) do pokémon: $tipo <br/>"; 
+    //echo "Número do pokémon: $numero <br/>";
+    //echo "Local de captura : $local<br/>"; 
+    ?> 
+</body>
+</html>
+
+<!-- CONEXÃO --> 
+<?php
+$servidor = "localhost";
+$usuario = "root";
+$senha = "";
+$dbname = "pokemon";
+$conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
+?>
