@@ -1,4 +1,52 @@
-<!-- FORMULÁRIO-->  
+<!-- pokedex.php-->
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <?php
+    echo "<a href = 'listar.php'>Lista </a>";
+    echo "<a href = index.php>Registrar</a>";
+    include_once("conexao.php");
+    $conexao =  mysqli_connect("localhost", "root", "", "pokemon");
+
+
+    $nome = $_POST["nome"];
+    $tipo = $_POST["tipo"];
+    $numero = $_POST["numero"];
+    $local = $_POST["local"];
+
+
+    $result_pokemons = "INSERT INTO pokemons(nome, tipo, numero, localidade, capturado) VALUES('$nome', '$tipo', '$numero', '$local', NOW())";
+    $resultado_pokemon = mysqli_query($conn, $result_pokemons);
+    
+
+    if(mysqli_insert_id($conn)){
+    $_SESSION['msg'] = "<p style ='color: green'>Pokémon registrado com sucesso!</p>";
+    header('location: index.php');
+    }
+    else{
+    header('location: index.php');
+    $_SESSION['msg'] = "<p style ='color: red'>Falha no registro do pokémon.</p>";
+    }
+    //echo "Nome do pokémon: $nome"."<br/>"; 
+    //echo "Tipo(s) do pokémon: $tipo <br/>"; 
+    //echo "Número do pokémon: $numero <br/>";
+    //echo "Local de captura : $local<br/>"; 
+    ?>
+</body>
+</html>
+
+<!--listar.php-->
+<?php
+session_start();
+include_once("conexao.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,57 +60,77 @@
 </head>
 <body>
     <h1>POKEDEX</h1>
+    <?php
+    if(isset($_SESSION['msg'])){
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+    $result_pokemons = "SELECT * FROM pokemons";
+    $resultado_pokemons = mysqli_query($conn, $result_pokemons);
+    while($row_pokemon = mysqli_fetch_assoc($resultado_pokemons))
+    {
+
+        echo "Nome do Pokémon: ".$row_pokemon['nome']."<br/>";
+        echo "Tipo:  ".$row_pokemon['tipo']."<br/>";
+        echo "Número na pokédex: ".$row_pokemon['numero']. "<br/><hr>";
+    }
+    echo "<a href = index.php>Registrar pokemon</a>"."<br/>";
+        echo "<a href = 'listar.php'>Lista </a><br/><br/>"; 
+    ?>
     <br/>
+    <br/>
+</body>
+</html>
+
+
+<!--index.php-->
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{
+     text-align: center;
+     }
+    </style>
+    <title>Pokédex</title>
+</head>
+<body>
+    <h1>POKEDEX</h1>
+    <?php
+    if(isset($_SESSION['msg'])){
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+    ?>
+    <br/>
+    <br/>
+    
         <form action = "pokedex.php" method = "POST">
             <b>
                 Nome do pokemon :<br/> <input type = "text" placeholder = "Nome completo do Pokemon" name = "nome"/><br/><br/>
                 Tipo(s) :<br/> <input type = "text" placeholder = "Tipo principal e/ou secundário" name = "tipo"/><br/><br/>
                 Número:<br/><input type = "text" placeholder = "Número na pokedex" name = "numero"/><br/><br/>
                 Local:<br/><input type = "text" placeholder = "Local de captura" name = "local"/><br/><br/>
-                <input type = "submit" name = "registrar"/>
+                <input type = "submit" name = "registrar"/><br/>
             </b>
-
         </form>
+        <?php
+        echo "<a href = index.php>Registrar pokemon</a>"."<br/>";
+        echo "<a href = 'listar.php'>Lista </a><br/><br/>";
+        ?>
 </body>
 </html>
 
- <!DOCTYPE html> <!-- REGISTRO NO BANCO DE DADOS --> 
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-     <?php
-    include_once("conexao.php");
-    $conexao =  mysqli_connect("localhost", "root", "", "pokemon");
-    $nome = $_POST["nome"];
-    $tipo = $_POST["tipo"];
-    $numero = $_POST["numero"];
-    $local = $_POST["local"];
-    $result_pokemons = "INSERT INTO pokemons(nome, tipo, numero, localidade, capturado) VALUES('$nome', '$tipo', '$numero', '$local', NOW())";
-    $resultado_pokemon = mysqli_query($conn, $result_pokemons);
-    
-    
-    if(mysqli_insert_id($conn)){ // O ERRO É AQUI
-        header("Location : Pokedex.html");
-    }
-    else{
-        header("Location : Pokedex.html");
-    }
-    //echo "Nome do pokémon: $nome"."<br/>"; 
-    //echo "Tipo(s) do pokémon: $tipo <br/>"; 
-    //echo "Número do pokémon: $numero <br/>";
-    //echo "Local de captura : $local<br/>"; 
-    ?> 
-</body>
-</html>
-
-<!-- CONEXÃO --> 
+<!-- conexao.php -->
 <?php
 $servidor = "localhost";
 $usuario = "root";
 $senha = "";
 $dbname = "pokemon";
+
 $conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
 ?>
