@@ -8,9 +8,39 @@ session_start();
     <style>
         body{
      text-align: center;
-     }
+    }
     </style>
+
     <title>Pokédex</title>
+    <script type = "text/javascript">
+        function validar(){
+            let nome = formpokemon.nome.value;
+            let tipo = formpokemon.tipo.value;
+            let numero = formpokemon.numero.value;
+            numero = parseFloat(numero);
+            let local = formpokemon.local.value;  
+            if(nome == ""){
+                alert("Preencha o campo nome");
+                formpokemon.nome.focus();
+                return false;
+        }
+            if(tipo == ""){
+                alert("Preencha o campo tipo");
+                formpokemon.tipo.focus();
+                return false; 
+        }
+            if(numero == "" || numero == NaN){
+                alert("Preencha o campo número.");
+                formpokemon.numero.focus();
+                return false;
+        }
+            if(local == ""){
+                alert("Preencha o campo local.");
+                formpokemon.local.focus();
+                return false;
+        }
+            }
+    </script>
 </head>
 <body>
     <h1>POKEDEX</h1>
@@ -22,14 +52,13 @@ session_start();
     ?>
     <br/>
     <br/>
-    
-        <form action = "pokedex.php" method = "POST">
+        <form name = "formpokemon" action = "pokedex.php" method = "POST">
             <b>
-                Nome do pokemon :<br/> <input type = "text" placeholder = "Nome completo do Pokemon" name = "nome"/><br/><br/>
-                Tipo(s) :<br/> <input type = "text" placeholder = "Tipo principal e/ou secundário" name = "tipo"/><br/><br/>
-                Número:<br/><input type = "text" placeholder = "Número na pokedex" name = "numero"/><br/><br/>
-                Local:<br/><input type = "text" placeholder = "Local de captura" name = "local"/><br/><br/>
-                <input type = "submit" name = "registrar"/><br/>
+                Nome do pokemon :<br/> <input type = "text" placeholder = "Nome completo do Pokemon" name = "nome" /><br/><br/>
+                Tipo(s) :<br/> <input type = "text" placeholder = "Tipo principal e/ou secundário" name = "tipo" /><br/><br/>
+                Número:<br/><input type = "number" placeholder = "Número na pokedex" name = "numero" /><br/><br/>
+                Local:<br/><input type = "text" placeholder = "Local de captura" name = "local" /><br/><br/>
+                <input type = "submit" onclick= "return validar()"/><br/>
             </b>
         </form>
         <?php
