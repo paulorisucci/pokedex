@@ -10,6 +10,35 @@ $row_usuario = mysqli_fetch_assoc($resultado_pokemon); // Lê os dados da tabela
 <html>
 <head>
     <meta charset="UTF-8">
+    <script type = "text/javascript">
+        function validar(){
+            let nome = formpokemon.nome.value;
+            let tipo = formpokemon.tipo.value;
+            let numero = formpokemon.numero.value;
+            let local = formpokemon.localidade.value;  
+            if(nome == ""){
+                alert("Preencha o campo nome");
+                formpokemon.nome.focus();
+                return false;
+        }
+            if(tipo == ""){
+                alert("Preencha o campo tipo");
+                formpokemon.tipo.focus();
+                return false; 
+        }
+            if(numero == ""){
+                alert("Preencha o campo número.");
+                formpokemon.numero.focus();
+                return false;
+        }
+            if(local == ""){
+                alert("Preencha o campo local.");
+                formpokemon.localidade.focus();
+                return false;
+        }
+            }
+    </script>
+
     <style>
         body{
      text-align: center;
@@ -28,14 +57,14 @@ $row_usuario = mysqli_fetch_assoc($resultado_pokemon); // Lê os dados da tabela
     <br/>
     <br/>
     
-        <form action = "proc_edit.php" method = "POST">
+        <form action = "proc_edit.php" name = "formpokemon" method = "POST">
             <b>
             <input type = "hidden" value = "<?php echo $row_usuario['id']; ?>" name = "id"/>
-                Nome do pokemon :<br/> <input type = "text" placeholder = "Novo nome" value = "<?php echo $row_usuario['nome']; ?>" name = "nome"/><br/><br/>
-                Tipo(s) :<br/> <input type = "text" placeholder = "Tipo principal e/ou secundário "value = "<?php echo $row_usuario['tipo']; ?>"  name = "tipo"/><br/><br/>
-                Número:<br/><input type = "text" placeholder = "Novo número" value = "<?php echo $row_usuario['numero']; ?>"  name = "numero"/><br/><br/>
-                Local:<br/><input type = "text" placeholder = "Local de captura" value = "<?php echo $row_usuario['localidade']; ?>"  name = "localidade"/><br/><br/>
-                <input type = "submit" value = "Editar"/><br/>
+                Nome do pokemon :<br/> <input type = "text" placeholder = "Novo nome" value = "<?php echo $row_usuario['nome']; ?>" name = "nome" /><br/><br/>
+                Tipo(s) :<br/> <input type = "text" placeholder = "Tipo principal e/ou secundário "value = "<?php echo $row_usuario['tipo']; ?>"  name = "tipo" /><br/><br/>
+                Número:<br/><input type = "number" placeholder = "Novo número" value = "<?php echo $row_usuario['numero']; ?>"  name = "numero" /><br/><br/>
+                Local:<br/><input type = "text" placeholder = "Local de captura" value = "<?php echo $row_usuario['localidade']; ?>"  name = "localidade" /><br/><br/>
+                <input type = "submit" onclick= "return validar()"/><br/>
             </b>
         </form>
         <?php
