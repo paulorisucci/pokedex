@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once("conexao.php");
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // obtem uma variável externa pelo método GET e a filtra
 $result_pokemon = "SELECT * FROM pokemons WHERE id = '$id'"; // seleciona uma tabela para editar
 $resultado_pokemon = mysqli_query($conn, $result_pokemon ); // executa uma consulta no banco de dados
 $row_usuario = mysqli_fetch_assoc($resultado_pokemon); // Lê os dados da tabela com o resultado do query
@@ -10,7 +10,7 @@ $row_usuario = mysqli_fetch_assoc($resultado_pokemon); // Lê os dados da tabela
 <html>
 <head>
     <meta charset="UTF-8">
-    <script type = "text/javascript">
+    <script type = "text/javascript"> // VALIDAR FORMULÁRIO
         function validar(){
             let nome = formpokemon.nome.value;
             let tipo = formpokemon.tipo.value;
@@ -49,7 +49,7 @@ $row_usuario = mysqli_fetch_assoc($resultado_pokemon); // Lê os dados da tabela
 <body>
     <h1>POKEDEX</h1>
     <?php
-    if(isset($_SESSION['msg'])){
+    if(isset($_SESSION['msg'])){ // MENSAGEM DE CONFIRMAÇÃO
         echo $_SESSION['msg'];
         unset($_SESSION['msg']);
     }
@@ -57,7 +57,7 @@ $row_usuario = mysqli_fetch_assoc($resultado_pokemon); // Lê os dados da tabela
     <br/>
     <br/>
     
-        <form action = "proc_edit.php" name = "formpokemon" method = "POST">
+        <form action = "proc_edit.php" name = "formpokemon" method = "POST"> <!--EDITAR -->
             <b>
             <input type = "hidden" value = "<?php echo $row_usuario['id']; ?>" name = "id"/>
                 Nome do pokemon :<br/> <input type = "text" placeholder = "Novo nome" value = "<?php echo $row_usuario['nome']; ?>" name = "nome" /><br/><br/>
