@@ -14,7 +14,7 @@ session_start();
     <title>Pokédex</title>
     <script type = "text/javascript">
         function validar(){
-            let nome = formpokemon.nome.value;
+            let nome = formpokemon.nome.value; //Tem acesso aos dados do formulário pelo nome na tabela
             let tipo = formpokemon.tipo.value;
             let numero = formpokemon.numero.value;
             numero = parseFloat(numero);
@@ -53,12 +53,15 @@ session_start();
     <br/>
     <br/>
         <form name = "formpokemon" action = "pokedex.php" method = "POST">
+        <!--O formulário e os campos precisam ter um name para editá-los no javascript-->
             <b>
                 Nome do pokemon :<br/> <input type = "text" placeholder = "Nome completo do Pokemon" name = "nome" /><br/><br/>
                 Tipo(s) :<br/> <input type = "text" placeholder = "Tipo principal e/ou secundário" name = "tipo" /><br/><br/>
                 Número:<br/><input type = "number" placeholder = "Número na pokedex" name = "numero" /><br/><br/>
                 Local:<br/><input type = "text" placeholder = "Local de captura" name = "local" /><br/><br/>
-                <input type = "submit" onclick= "return validar()"/><br/>
+                <input type = "submit" onclick= "return validar()"/><br/> 
+                <!--O comando onclick registra o clique e retorna o resultado da função validar-->
+
             </b>
         </form>
         <?php
