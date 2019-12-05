@@ -12,7 +12,6 @@ session_start();
     echo "<a href = 'listar.php'>Lista </a>";
     echo "<a href = index.php>Registrar</a>";
     include_once("conexao.php");
-    $conexao =  mysqli_connect("localhost", "root", "", "pokemon");
 
 
     $nome = $_POST["nome"];
