@@ -21,8 +21,10 @@ include_once("conexao.php");
         unset($_SESSION['msg']);
     }
     $result_pokemons = "SELECT * FROM pokemons";
+    // selecionou todas as tabelas
     $resultado_pokemons = mysqli_query($conn, $result_pokemons);
     while($row_pokemon = mysqli_fetch_assoc($resultado_pokemons))
+    // mysqli_fetch_assoc retorna uma matriz associativa com os dados de todas as tabelas do banco 
     {
 
         echo "Nome do Pokémon: ".$row_pokemon['nome']."<br/>";
